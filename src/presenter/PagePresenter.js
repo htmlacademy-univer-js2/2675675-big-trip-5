@@ -5,6 +5,7 @@ import EditFormView from '../view/EditForm.js';
 import PointView from '../view/Point.js';
 
 export default class PagePresenter {
+
   constructor(container) {
     this.container = container;
   }
