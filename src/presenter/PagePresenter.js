@@ -1,41 +1,64 @@
+// page-presenter.js
 import FilterView from '../view/Filters.js';
 import SortView from '../view/Sortings.js';
 import CreateFormView from '../view/CreateForm.js';
 import EditFormView from '../view/EditForm.js';
-import PointView from '../view/Point.js';
+
+import PointPresenter from './PointPresenter.js';   // ← новый импорт
 
 export default class PagePresenter {
 
+  #container = null;
+  #pointListContainer = null;
+
+  // Массив дочерних презентеров точек
+  #pointPresenters = [];
+
   constructor(container) {
-    this.container = container;
+    this.#container = container;
   }
 
   init() {
+    // Фильтр
     const filterComponent = new FilterView();
-    this.container.appendChild(filterComponent.getElement());
+    this.#container.appendChild(filterComponent.getElement());
 
+    // Сортировка
     const sortComponent = new SortView();
-    this.container.appendChild(sortComponent.getElement());
+    this.#container.appendChild(sortComponent.getElement());
 
+    // Форма создания (новая точка)
     const createFormComponent = new CreateFormView();
-    this.container.appendChild(createFormComponent.getElement());
+    this.#container.appendChild(createFormComponent.getElement());
 
-    const listContainer = document.createElement('ul');
-    listContainer.classList.add('trip-events__list');
-    this.container.appendChild(listContainer);
+    // Контейнер для всех точек и редактирования
+    this.#pointListContainer = document.createElement('ul');
+    this.#pointListContainer.classList.add('trip-events__list');
+    this.#container.appendChild(this.#pointListContainer);
 
+    // Временная форма редактирования (пока одна на всю страницу)
     const editFormComponent = new EditFormView();
     const editLi = document.createElement('li');
     editLi.classList.add('trip-events__item');
     editLi.appendChild(editFormComponent.getElement());
-    listContainer.appendChild(editLi);
+    this.#pointListContainer.appendChild(editLi);
 
-    for (let i = 0; i < 3; i++) {
-      const pointComponent = new PointView();
-      const li = document.createElement('li');
-      li.classList.add('trip-events__item');
-      li.appendChild(pointComponent.getElement());
-      listContainer.appendChild(li);
-    }
+    // Создаём и инициализируем презентеры для точек
+    // В реальном проекте данные придут из модели, здесь — заглушка
+    const mockPoints = [{ id: 1 }, { id: 2 }, { id: 3 }]; // ← потом заменить на this.#pointsModel.getPoints()
+
+    mockPoints.forEach(pointData => {
+      const pointPresenter = new PointPresenter({
+        container: this.#pointListContainer
+      });
+
+      pointPresenter.init(pointData);
+      this.#pointPresenters.push(pointPresenter);
+    });
   }
+
+  // В будущем здесь будут методы:
+  // addPoint(point) { ... }
+  // updatePoint(id, updatedPoint) { ... }
+  // removePoint(id) { ... }
 }
