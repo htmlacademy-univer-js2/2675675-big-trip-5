@@ -1,10 +1,8 @@
-import AbstractView from './abstract-view.js'; // предполагаем, что путь правильный
+import AbstractView from 'src/framework/view/abstract-view.js';
 
 export default class CreateFormView extends AbstractView {
   constructor() {
-    super();           // ← обязательно!
-    // если нужно хранить какие-то начальные данные — добавляйте сюда приватные поля
-    // пока в вашем варианте данных нет → оставляем пустым
+    super();
   }
 
   /**

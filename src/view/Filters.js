@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';   // скорректируйте путь, если нужно
+import AbstractView from 'src/framework/view/abstract-view.js';   // скорректируйте путь, если нужно
 
 export default class FilterView extends AbstractView {
   constructor() {

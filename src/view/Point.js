@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';  // скорректируйте путь при необходимости
+import AbstractView from 'src/framework/view/abstract-view.js';  // скорректируйте путь при необходимости
 
 export default class PointView extends AbstractView {
   #point = null;
